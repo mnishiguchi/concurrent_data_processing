@@ -11,6 +11,8 @@ defmodule Sender do
       emails |> Enum.at(0) |> Sender.send_email()
 
   """
+  def send_email("konnichiwa@world.com" = email), do: raise "Oops, couldn't send email to #{email}!"
+
   def send_email(email) do
     Process.sleep(:timer.seconds(3))
     IO.puts("Email to #{email} sent")
@@ -66,6 +68,12 @@ defmodule Sender do
       :async_stream_kill_on_timeout ->
         emails
         |> Task.async_stream(&send_email/1, on_timeout: :kill_task)
+        |> Enum.to_list()
+
+      # The caller won't crash when a task is crashed.
+      :supervised ->
+        Sender.EmailTaskSupervisor
+        |> Task.Supervisor.async_stream_nolink(emails, &send_email/1)
         |> Enum.to_list()
 
       # Send one by one in series
