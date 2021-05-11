@@ -5,3 +5,4 @@ emails = [
 ]
 
 alias Sender.SenderTask
+alias Sender.SenderServer
