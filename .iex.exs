@@ -1,6 +1,7 @@
 emails = [
-  "hello@world.com",
-  "hola@world.com",
-  "nihao@world.com",
-  "konnichiwa@world.com"
+  "111@example.com",
+  "error@example.com",
+  "222@example.com"
 ]
+
+alias Sender.SenderTask
