@@ -9,7 +9,8 @@ defmodule Sender.Application do
   def start(_type, _args) do
     children = [
       # Task.Supervisor is a builtin supervisor
-      {Task.Supervisor, name: Sender.EmailTaskSupervisor}
+      {Task.Supervisor, name: Sender.EmailTaskSupervisor},
+      Sender.JobRunner
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

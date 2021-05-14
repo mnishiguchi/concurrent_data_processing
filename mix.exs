@@ -14,7 +14,8 @@ defmodule Sender.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      # Libraries that are available to us but not part of the Erlang standard library
+      extra_applications: [:logger, :crypto],
       mod: {Sender.Application, []}
     ]
   end
