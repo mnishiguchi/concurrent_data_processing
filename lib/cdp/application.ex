@@ -11,7 +11,10 @@ defmodule Cdp.Application do
       # Task.Supervisor is a builtin supervisor
       {Task.Supervisor, name: SenderTaskSupervisor},
       Jobber.Registry,
-      Jobber.Runner
+      Jobber.Runner,
+      PageProducer,
+      Supervisor.child_spec(PageConsumer, id: {PageConsumer, 1}),
+      Supervisor.child_spec(PageConsumer, id: {PageConsumer, 2}),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

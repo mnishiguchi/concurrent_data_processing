@@ -23,6 +23,7 @@ defmodule Cdp.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:gen_stage, "~> 1.0"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
   end
