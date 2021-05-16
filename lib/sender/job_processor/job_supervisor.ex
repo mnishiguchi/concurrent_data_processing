@@ -6,6 +6,7 @@ defmodule Sender.JobSupervisor do
 
   use Supervisor, restart: :temporary
 
+  @spec start_link(Sender.JobWorker.init_arg()) :: Supervisor.on_start()
   def start_link(args) do
     Supervisor.start_link(__MODULE__, args)
   end

@@ -1,13 +1,6 @@
 defmodule Sender.JobWorker do
-  @moduledoc ~S"""
-  Does the actual job.
-
-  ## Examples
-
-      {:ok, pid} = JobWorker.start_link(work_fn: good_work)
-
-      {:ok, pid} = JobWorker.start_link(work_fn: bad_work)
-
+  @moduledoc """
+  Does the actual work.
   """
 
   use GenServer, restart: :temporary
@@ -24,14 +17,37 @@ defmodule Sender.JobWorker do
 
   @retry_interval 5000
 
+  @type id :: binary
+  @type type :: binary
+  @type work_fn :: (() -> {:ok, any} | {:error, any})
+  @type max_retries :: pos_integer
+
+  @type init_arg :: [
+          id: id,
+          type: type,
+          work_fn: work_fn,
+          max_retries: max_retries
+        ]
+
+  @spec start_link(init_arg) :: GenServer.on_start()
   def start_link(args \\ []) do
-    GenServer.start_link(__MODULE__, args)
+    args = maybe_put_random_id(args)
+
+    id = Keyword.fetch!(args, :id)
+    type = Keyword.fetch!(args, :type)
+    GenServer.start_link(__MODULE__, args, name: Sender.JobRegistry.via(id, type))
+  end
+
+  defp maybe_put_random_id(args) do
+    if Keyword.has_key?(args, :id),
+      do: args,
+      else: Keyword.put(args, :id, random_job_id())
   end
 
   @impl GenServer
   def init(args) do
     initial_state = %__MODULE__{
-      id: Keyword.get(args, :id, random_job_id()),
+      id: Keyword.fetch!(args, :id),
       work_fn: Keyword.fetch!(args, :work_fn),
       max_retries: Keyword.get(args, :max_retries, 3)
     }

@@ -10,6 +10,7 @@ defmodule Sender.Application do
     children = [
       # Task.Supervisor is a builtin supervisor
       {Task.Supervisor, name: Sender.EmailTaskSupervisor},
+      Sender.JobRegistry,
       Sender.JobRunner
     ]
 
