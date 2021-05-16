@@ -1,4 +1,4 @@
-defmodule Sender.JobWorker do
+defmodule Jobber.Worker do
   @moduledoc """
   Does the actual work.
   """
@@ -35,7 +35,7 @@ defmodule Sender.JobWorker do
 
     id = Keyword.fetch!(args, :id)
     type = Keyword.fetch!(args, :type)
-    GenServer.start_link(__MODULE__, args, name: Sender.JobRegistry.via(id, type))
+    GenServer.start_link(__MODULE__, args, name: Jobber.Registry.via(id, type))
   end
 
   defp maybe_put_random_id(args) do

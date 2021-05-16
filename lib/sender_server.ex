@@ -1,39 +1,33 @@
-defmodule Sender.SenderServer do
+defmodule SenderServer do
+  @moduledoc false
+
+  defmodule Mailer do
+    @moduledoc false
+
+    @doc """
+    Sends one email.
+
+    ## Examples
+
+        iex> SenderServer.Mailer.deliver_now("error@example.com")
+        :error
+
+        iex> SenderServer.Mailer.deliver_now("111@example.com")
+        {:ok, "email_sent"}
+
+    """
+    def deliver_now("error@example.com" = _email_address), do: :error
+
+    def deliver_now(email_address) do
+      Process.sleep(:timer.seconds(2))
+      IO.puts("Email to #{email_address} sent")
+
+      {:ok, "email_sent"}
+    end
+  end
+
   use GenServer
 
-  @doc """
-  Send one email
-
-  ## Examples
-
-      iex> SenderServer.send_email("111@example.com")
-      :ok
-
-      iex> SenderServer.send_email("error@example.com")
-      :error
-
-  """
-  # Simulates error
-  def send_email("error@example.com" = _email_address) do
-    :error
-  end
-
-  # Simulates success
-  def send_email(email_address) do
-    Process.sleep(:timer.seconds(2))
-    IO.puts("Email to #{email_address} sent")
-    {:ok, "email_sent"}
-  end
-
-  @doc """
-  ## Examples
-
-      {:ok, pid} = SenderServer.start_link()
-      SenderServer.send_email(pid, "111@example.com")
-      SenderServer.send_email(pid, "error@example.com")
-      :sys.get_state(pid)
-
-  """
   def start_link(args \\ []) do
     GenServer.start_link(__MODULE__, args)
   end
@@ -57,7 +51,7 @@ defmodule Sender.SenderServer do
   @impl GenServer
   def handle_cast({:send_email, email_address}, state) do
     status =
-      case send_email(email_address) do
+      case Mailer.deliver_now(email_address) do
         {:ok, _} -> "sent"
         :error -> "failed"
       end
@@ -78,7 +72,7 @@ defmodule Sender.SenderServer do
         IO.puts("Retrying email #{entry.email}...")
 
         new_status =
-          case send_email(entry.email) do
+          case Mailer.deliver_now(entry.email) do
             {:ok, _} -> "sent"
             :error -> "failed"
           end

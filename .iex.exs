@@ -10,8 +10,8 @@ bad_work = fn -> Process.sleep(5000); :error end
 
 doomed_work = fn -> Process.sleep(5000); raise "Boom!" end
 
-alias Sender.SenderTask
-alias Sender.SenderServer
-alias Sender.JobRunner
-alias Sender.JobWorker
-alias Sender.JobRegistry
+alias SenderTask
+alias SenderServer
+alias Jobber.Runner
+alias Jobber.Worker
+alias Jobber.Registry

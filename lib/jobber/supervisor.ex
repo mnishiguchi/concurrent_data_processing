@@ -1,4 +1,4 @@
-defmodule Sender.JobSupervisor do
+defmodule Jobber.Supervisor do
   @moduledoc """
   An intermediary supervisor that starts the Job process. This process won't be
   restarted even when the child process exits with an error.
@@ -6,7 +6,7 @@ defmodule Sender.JobSupervisor do
 
   use Supervisor, restart: :temporary
 
-  @spec start_link(Sender.JobWorker.init_arg()) :: Supervisor.on_start()
+  @spec start_link(Jobber.Worker.init_arg()) :: Supervisor.on_start()
   def start_link(args) do
     Supervisor.start_link(__MODULE__, args)
   end
@@ -14,7 +14,7 @@ defmodule Sender.JobSupervisor do
   @impl Supervisor
   def init(args) do
     children = [
-      {Sender.JobWorker, args}
+      {Jobber.Worker, args}
     ]
 
     options = [

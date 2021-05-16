@@ -1,11 +1,11 @@
-defmodule Sender.JobRegistry do
+defmodule Jobber.Registry do
   @moduledoc """
   Manages the processes of `JobWorker`. Job ID's are used as an identifier.
   Each entry has job type attached to it.
   """
 
-  @type id :: Sender.JobWorker.id()
-  @type type :: Sender.JobWorker.type()
+  @type id :: Jobber.Worker.id()
+  @type type :: Jobber.Worker.type()
 
   @spec child_spec(any) :: Supervisor.child_spec()
   def child_spec(_args) do
@@ -24,7 +24,7 @@ defmodule Sender.JobRegistry do
   @doc """
   Returns a via tuple for accessing a process that is held in this registry.
   """
-  @spec via(id, type) :: {:via, Registry, {Sender.JobRegistry, id, type}}
+  @spec via(id, type) :: {:via, Registry, {Jobber.Registry, id, type}}
   def via(id, type) do
     # {:via, Registry, {registry_module, unique_name, optional_value}}
     {:via, Registry, {__MODULE__, id, type}}

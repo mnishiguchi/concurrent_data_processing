@@ -1,4 +1,4 @@
-defmodule Sender.JobRunner do
+defmodule Jobber.Runner do
   @moduledoc ~S"""
   Starts an isolated supervised process for each job.
 
@@ -14,27 +14,27 @@ defmodule Sender.JobRunner do
   ## Examples
 
       # Simulate error
-      {:ok, pid} = JobRunner.start_job(work_fn: bad_work, type: "send_email")
+      {:ok, pid} = Jobber.Runner.start_job(work_fn: bad_work, type: "send_email")
 
       # Simulate crash
-      {:ok, pid} = JobRunner.start_job(work_fn: doomed_work, type: "send_email")
+      {:ok, pid} = Jobber.Runner.start_job(work_fn: doomed_work, type: "send_email")
 
       # Send many
-      (1..6) |> Enum.map(fn _ -> JobRunner.start_job(work_fn: good_work, type: "import") end)
+      (1..6) |> Enum.map(fn _ -> Jobber.Runner.start_job(work_fn: good_work, type: "import") end)
 
       # Send different job types
-      {:ok, pid} = JobRunner.start_job(work_fn: good_work, type: "import")
-      {:ok, pid} = JobRunner.start_job(work_fn: good_work, type: "send_email")
-      {:ok, pid} = JobRunner.start_job(work_fn: good_work, type: "import")
+      {:ok, pid} = Jobber.Runner.start_job(work_fn: good_work, type: "import")
+      {:ok, pid} = Jobber.Runner.start_job(work_fn: good_work, type: "send_email")
+      {:ok, pid} = Jobber.Runner.start_job(work_fn: good_work, type: "import")
       JobRegistry.running_imports()
 
       # Inspect children
-      JobRunner.count_children()
-      JobRunner.which_children()
+      Jobber.Runner.count_children()
+      Jobber.Runner.which_children()
 
       # Purge idle children
-      JobRunner.idle_children()
-      JobRunner.stop_idle_children()
+      Jobber.Runner.idle_children()
+      Jobber.Runner.stop_idle_children()
 
   """
 
@@ -45,13 +45,13 @@ defmodule Sender.JobRunner do
     DynamicSupervisor.start_link(__MODULE__, args, name: __MODULE__)
   end
 
-  @spec start_job(Sender.JobWorker.init_arg()) :: DynamicSupervisor.on_start_child()
+  @spec start_job(Jobber.Worker.init_arg()) :: DynamicSupervisor.on_start_child()
   def start_job(args) do
     # Enforce a limit on how many import jobs can run at any given time
-    if Enum.count(Sender.JobRegistry.running_imports()) >= 5 do
+    if Enum.count(Jobber.Registry.running_imports()) >= 5 do
       {:error, :import_quota_reached}
     else
-      DynamicSupervisor.start_child(__MODULE__, {Sender.JobSupervisor, args})
+      DynamicSupervisor.start_child(__MODULE__, {Jobber.Supervisor, args})
     end
   end
 

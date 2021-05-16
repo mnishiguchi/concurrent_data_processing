@@ -1,4 +1,4 @@
-defmodule Sender.MixProject do
+defmodule Cdp.MixProject do
   use Mix.Project
 
   def project do
@@ -16,15 +16,14 @@ defmodule Sender.MixProject do
     [
       # Libraries that are available to us but not part of the Erlang standard library
       extra_applications: [:logger, :crypto],
-      mod: {Sender.Application, []}
+      mod: {Cdp.Application, []}
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
   end
 end
