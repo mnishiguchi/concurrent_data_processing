@@ -13,8 +13,7 @@ defmodule Cdp.Application do
       Jobber.Registry,
       Jobber.Runner,
       PageProducer,
-      Supervisor.child_spec(PageConsumer, id: {PageConsumer, 1}),
-      Supervisor.child_spec(PageConsumer, id: {PageConsumer, 2}),
+      PageConsumerSupervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
