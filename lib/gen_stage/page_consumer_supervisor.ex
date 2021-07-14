@@ -27,8 +27,10 @@ defmodule PageConsumerSupervisor do
 
     opts = [
       strategy: :one_for_one,
-      # Two consumers at most can run concurrently
-      subscribe_to: [{PageProducer, max_demand: System.schedulers_online() * 2}]
+      subscribe_to: [
+        {OnlinePageProducerConsumer.via(1), []},
+        {OnlinePageProducerConsumer.via(2), []}
+      ]
     ]
 
     ConsumerSupervisor.init(children, opts)
