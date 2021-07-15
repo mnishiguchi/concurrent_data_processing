@@ -1,4 +1,4 @@
-defmodule PageConsumerSupervisor do
+defmodule Scraper.PageConsumerSupervisor do
   @moduledoc """
   Manages demand, receives events and starts concurrent worker processes.
   A child process is started per event.
@@ -19,8 +19,8 @@ defmodule PageConsumerSupervisor do
       # The template for all concurrent child processes. An event will be passed in as an arg.
       # https://hexdocs.pm/gen_stage/ConsumerSupervisor.html
       %{
-        id: PageConsumerWorker,
-        start: {PageConsumerWorker, :start_link, []},
+        id: Scraper.PageConsumerWorker,
+        start: {Scraper.PageConsumerWorker, :start_link, []},
         restart: :transient
       }
     ]
@@ -28,8 +28,8 @@ defmodule PageConsumerSupervisor do
     opts = [
       strategy: :one_for_one,
       subscribe_to: [
-        {OnlinePageProducerConsumer.via(1), []},
-        {OnlinePageProducerConsumer.via(2), []}
+        {Scraper.OnlinePageProducerConsumer.via(1), []},
+        {Scraper.OnlinePageProducerConsumer.via(2), []}
       ]
     ]
 

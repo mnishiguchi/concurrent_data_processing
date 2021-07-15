@@ -1,4 +1,4 @@
-defmodule PageProducer do
+defmodule Scraper.PageProducer do
   @moduledoc false
 
   use GenStage

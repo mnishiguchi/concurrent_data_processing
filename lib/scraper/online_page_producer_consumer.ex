@@ -1,4 +1,4 @@
-defmodule OnlinePageProducerConsumer do
+defmodule Scraper.OnlinePageProducerConsumer do
   @moduledoc false
 
   use GenStage
@@ -17,7 +17,7 @@ defmodule OnlinePageProducerConsumer do
     }
   end
 
-  defdelegate via(unique_name), to: OnlinePageProducerConsumerRegistry
+  defdelegate via(unique_name), to: Scraper.OnlinePageProducerConsumerRegistry
 
   @spec start_link(any) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(unique_name) do
@@ -32,7 +32,7 @@ defmodule OnlinePageProducerConsumer do
     initial_state = []
 
     subscribe_to = [
-      {PageProducer, min_demand: 0, max_demand: 1}
+      {Scraper.PageProducer, min_demand: 0, max_demand: 1}
     ]
 
     {:producer_consumer, initial_state, subscribe_to: subscribe_to}

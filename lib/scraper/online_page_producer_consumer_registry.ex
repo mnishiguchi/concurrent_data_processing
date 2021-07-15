@@ -1,4 +1,4 @@
-defmodule OnlinePageProducerConsumerRegistry do
+defmodule Scraper.OnlinePageProducerConsumerRegistry do
   @moduledoc false
 
   @spec child_spec(any) :: Supervisor.child_spec()

@@ -12,11 +12,11 @@ defmodule ConcurrentDataProcessing.Application do
       {Task.Supervisor, name: SenderTaskSupervisor},
       Jobber.Registry,
       Jobber.Runner,
-      OnlinePageProducerConsumerRegistry,
-      PageProducer,
-      OnlinePageProducerConsumer.child_spec(id: 1),
-      OnlinePageProducerConsumer.child_spec(id: 2),
-      PageConsumerSupervisor
+      Scraper.OnlinePageProducerConsumerRegistry,
+      Scraper.PageProducer,
+      Scraper.OnlinePageProducerConsumer.child_spec(id: 1),
+      Scraper.OnlinePageProducerConsumer.child_spec(id: 2),
+      Scraper.PageConsumerSupervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

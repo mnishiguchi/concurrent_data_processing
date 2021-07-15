@@ -1,4 +1,4 @@
-defmodule PageConsumerWorker do
+defmodule Scraper.PageConsumerWorker do
   @moduledoc """
   This does the actual work although it is not a GenStage consumer.
   """
@@ -12,7 +12,7 @@ defmodule PageConsumerWorker do
 
     # Pretending that we are scraping web pages
     Task.start_link(fn ->
-      Scraper.work()
+      Scraper.fake_work()
     end)
   end
 end
