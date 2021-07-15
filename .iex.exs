@@ -13,3 +13,5 @@ bad_work = fn -> Process.sleep(5000); :error end
 doomed_work = fn -> Process.sleep(5000); raise "Boom!" end
 
 pages = (1..5) |> Enum.map(& "#{&1}.example.com")
+
+import Airports

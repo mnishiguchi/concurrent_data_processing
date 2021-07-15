@@ -24,6 +24,8 @@ defmodule ConcurrentDataProcessing.MixProject do
   defp deps do
     [
       {:gen_stage, "~> 1.0"},
+      {:flow, "~> 1.0"},
+      {:nimble_csv, "~> 1.1"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
   end

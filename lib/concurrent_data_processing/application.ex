@@ -14,9 +14,8 @@ defmodule ConcurrentDataProcessing.Application do
       Jobber.Runner,
       Scraper.OnlinePageProducerConsumerRegistry,
       Scraper.PageProducer,
-      Scraper.OnlinePageProducerConsumer.child_spec(id: 1),
-      Scraper.OnlinePageProducerConsumer.child_spec(id: 2),
-      Scraper.PageConsumerSupervisor
+      Scraper.PageConsumerSupervisor,
+      Scraper.OnlinePageFlow
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
