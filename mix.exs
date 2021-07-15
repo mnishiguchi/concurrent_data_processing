@@ -1,9 +1,9 @@
-defmodule Cdp.MixProject do
+defmodule ConcurrentDataProcessing.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :sender,
+      app: :concurrent_data_processing,
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
@@ -16,7 +16,7 @@ defmodule Cdp.MixProject do
     [
       # Libraries that are available to us but not part of the Erlang standard library
       extra_applications: [:logger, :crypto],
-      mod: {Cdp.Application, []}
+      mod: {ConcurrentDataProcessing.Application, []}
     ]
   end
 
