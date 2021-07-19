@@ -15,7 +15,7 @@ defmodule ConcurrentDataProcessing.MixProject do
   def application do
     [
       # Libraries that are available to us but not part of the Erlang standard library
-      extra_applications: [:logger, :crypto],
+      extra_applications: [:lager, :logger, :crypto],
       mod: {ConcurrentDataProcessing.Application, []}
     ]
   end
@@ -26,6 +26,9 @@ defmodule ConcurrentDataProcessing.MixProject do
       {:gen_stage, "~> 1.0"},
       {:flow, "~> 1.0"},
       {:nimble_csv, "~> 1.1"},
+      {:broadway, "~> 0.6"},
+      {:broadway_rabbitmq, "~> 0.6"},
+      {:amqp, "~> 1.6"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
   end
