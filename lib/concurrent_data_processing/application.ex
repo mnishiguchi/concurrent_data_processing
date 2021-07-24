@@ -17,7 +17,8 @@ defmodule ConcurrentDataProcessing.Application do
       Scraper.PageConsumerSupervisor,
       Scraper.OnlinePageFlow,
       BookingsPipeline,
-      NotificationsPipeline
+      NotificationsPipeline,
+      ScrapingPipeline
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
